@@ -22,6 +22,11 @@
 			"Name": "PaperZD",
 			"Enabled": true,
 			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/c4b43502026047d89296cd7bffd92828"
+		},
+		{
+			"Name": "AdvancedFadeObjects",
+			"Enabled": true,
+			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/5797fa36906648ba8ffdeb6ee94c903e"
 		}
 	]
 }
