@@ -17,6 +17,9 @@ class MEOWCHEMY_API AAI_SlimeEnemyController : public AAIController
 public:
 	AAI_SlimeEnemyController();
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="AI")
+	float TraceDistance = 500.0f;
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void OnPossess(APawn* InPawn) override;
@@ -25,11 +28,7 @@ protected:
 private:
 	UPROPERTY(EditAnywhere, Category="AI")
 	float TraceRadius = 50.0f;
-	
-	UPROPERTY(EditAnywhere, Category="AI")
-	float TraceDistance = 500.0f;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="AI", meta=(AllowPrivateAccess=true))
 	bool PlayerLocated = false;
-
 };

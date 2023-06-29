@@ -35,14 +35,12 @@ void AAI_SlimeEnemyController::Tick(float DeltaSeconds)
 
 	FCollisionQueryParams QueryParams;
 	QueryParams.AddIgnoredActor(this);
-	// QueryParams.AddIgnoredActor(GetPawn());
 
 	bool Hit = GetWorld()->SweepMultiByChannel(HitResults, StartVector, EndVector, FQuat::Identity,
 	                                           ECC_Camera, ColShape, QueryParams);
 
-	DrawDebugSphere(GetWorld(), StartVector, TraceRadius, 12, FColor::Orange, false);
 	DrawDebugLine(GetWorld(), StartVector, EndVector, FColor::Orange, false);
-	
+
 	if (Direction.Length() <= TraceDistance)
 	{
 		if (Hit)
@@ -58,8 +56,8 @@ void AAI_SlimeEnemyController::Tick(float DeltaSeconds)
 					const AActor* HitActor = HitResult.GetActor();
 					if (HitActor->ActorHasTag("Player"))
 					{
-						GEngine->AddOnScreenDebugMessage(-1, 0.1f, FColor::Green, FString::Printf(
-							                                 TEXT("Hit: %s"), *HitResult.GetActor()->GetName()));
+						// GEngine->AddOnScreenDebugMessage(-1, 0.1f, FColor::Green, FString::Printf(
+						// 	                                 TEXT("Hit: %s"), *HitResult.GetActor()->GetName()));
 						PlayerLocated = true;
 					}
 				}
