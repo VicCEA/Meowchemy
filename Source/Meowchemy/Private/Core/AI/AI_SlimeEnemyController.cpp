@@ -25,46 +25,49 @@ void AAI_SlimeEnemyController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
-	// if (!M_PossessedPawn)return;
-
-	const FVector StartVector = GetPawn()->GetActorLocation();
+	const FVector StartVector = GetPawn()->GetActorLocation() + FVector(0, 0, 0);
 	const FVector EndVector = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)->GetActorLocation();
-	// EndVector.Normalize();
+
+	const FVector Direction = EndVector - StartVector;
 
 	TArray<FHitResult> HitResults;
 	FCollisionShape ColShape = FCollisionShape::MakeSphere(TraceRadius);
+
 	FCollisionQueryParams QueryParams;
-	const AActor* SelfActor = GetPawn();
-	QueryParams.AddIgnoredActor(SelfActor);
+	QueryParams.AddIgnoredActor(this);
+	// QueryParams.AddIgnoredActor(GetPawn());
 
 	bool Hit = GetWorld()->SweepMultiByChannel(HitResults, StartVector, EndVector, FQuat::Identity,
-	                                           ECC_Visibility, ColShape, QueryParams);
+	                                           ECC_Camera, ColShape, QueryParams);
 
 	DrawDebugSphere(GetWorld(), StartVector, TraceRadius, 12, FColor::Orange, false);
 	DrawDebugLine(GetWorld(), StartVector, EndVector, FColor::Orange, false);
-
-	const FVector Direction = EndVector - StartVector;
+	
 	if (Direction.Length() <= TraceDistance)
 	{
-			DrawDebugLine(GetWorld(), StartVector, EndVector, FColor::Red, false);
-			PlayerLocated = true;
-		
 		if (Hit)
 		{
+			DrawDebugLine(GetWorld(), StartVector, EndVector, FColor::Red, false);
 
 			for (FHitResult const HitResult : HitResults)
 			{
-				DrawDebugSphere(GetWorld(), HitResult.Location, TraceRadius / 2, 12, FColor::Red, false);
-
-				const AActor* HitActor = HitResult.GetActor();
-				if (HitActor->ActorHasTag("Player"))
+				if (HitResult.bBlockingHit)
 				{
-					GEngine->AddOnScreenDebugMessage(-1, 0.1f, FColor::Orange, FString::Printf(
-						                                 TEXT("Hit: %s"), *HitResult.GetActor()->GetName()));
-					// break;
+					DrawDebugSphere(GetWorld(), HitResult.Location, TraceRadius / 2, 12, FColor::Red, false);
+
+					const AActor* HitActor = HitResult.GetActor();
+					if (HitActor->ActorHasTag("Player"))
+					{
+						GEngine->AddOnScreenDebugMessage(-1, 0.1f, FColor::Green, FString::Printf(
+							                                 TEXT("Hit: %s"), *HitResult.GetActor()->GetName()));
+						PlayerLocated = true;
+					}
 				}
-				// PlayerLocated = false;
 			}
 		}
+	}
+	else
+	{
+		PlayerLocated = false;
 	}
 }

@@ -31,4 +31,5 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="AI", meta=(AllowPrivateAccess=true))
 	bool PlayerLocated = false;
+
 };
