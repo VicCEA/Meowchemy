@@ -39,19 +39,19 @@ void AAI_SlimeEnemyController::Tick(float DeltaSeconds)
 	bool Hit = GetWorld()->SweepMultiByChannel(HitResults, StartVector, EndVector, FQuat::Identity,
 	                                           ECC_Camera, ColShape, QueryParams);
 
-	DrawDebugLine(GetWorld(), StartVector, EndVector, FColor::Orange, false);
+	// DrawDebugLine(GetWorld(), StartVector, EndVector, FColor::Orange, false);
 
 	if (Direction.Length() <= TraceDistance)
 	{
 		if (Hit)
 		{
-			DrawDebugLine(GetWorld(), StartVector, EndVector, FColor::Red, false);
+			// DrawDebugLine(GetWorld(), StartVector, EndVector, FColor::Red, false);
 
 			for (FHitResult const HitResult : HitResults)
 			{
 				if (HitResult.bBlockingHit)
 				{
-					DrawDebugSphere(GetWorld(), HitResult.Location, TraceRadius / 2, 12, FColor::Red, false);
+					// DrawDebugSphere(GetWorld(), HitResult.Location, TraceRadius / 2, 12, FColor::Red, false);
 
 					const AActor* HitActor = HitResult.GetActor();
 					if (HitActor->ActorHasTag("Player"))
