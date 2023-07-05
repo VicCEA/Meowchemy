@@ -30,19 +30,19 @@ void AAI_SlimeEnemyController::Tick(float DeltaSeconds)
 
 	const FVector Direction = EndVector - StartVector;
 
-	TArray<FHitResult> HitResults;
-	FCollisionShape ColShape = FCollisionShape::MakeSphere(TraceRadius);
-
-	FCollisionQueryParams QueryParams;
-	QueryParams.AddIgnoredActor(this);
-
-	bool Hit = GetWorld()->SweepMultiByChannel(HitResults, StartVector, EndVector, FQuat::Identity,
-	                                           ECC_Camera, ColShape, QueryParams);
-
 	// DrawDebugLine(GetWorld(), StartVector, EndVector, FColor::Orange, false);
 
 	if (Direction.Length() <= TraceDistance)
 	{
+		TArray<FHitResult> HitResults;
+		FCollisionShape ColShape = FCollisionShape::MakeSphere(TraceRadius);
+
+		FCollisionQueryParams QueryParams;
+		QueryParams.AddIgnoredActor(this);
+
+		bool Hit = GetWorld()->SweepMultiByChannel(HitResults, StartVector, EndVector, FQuat::Identity,
+		                                           ECC_Camera, ColShape, QueryParams);
+
 		if (Hit)
 		{
 			// DrawDebugLine(GetWorld(), StartVector, EndVector, FColor::Red, false);
